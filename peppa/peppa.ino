@@ -3,8 +3,9 @@
 
 #include ".\config.h"
 
-#define SLOWEST_ROTATION 1000 //The maximum amount of time in ms it can take to go from one magnet to the other
+#define SLOWEST_ROTATION 2000 //The maximum amount of time in ms it can take to go from one magnet to the other
 #define FASTEST_ROTATION 10
+#define UPLOAD_FREQUENCY 3600000
  
 volatile int lastRotation1 = 0;
 volatile int lastRotation2 = 0;
@@ -75,7 +76,7 @@ void pulse() {
 
 }
 void loop() {
-  if (millis() > 21600000 && !uploaded) { //12 hours
+  if (millis() > UPLOAD_FREQUENCY && !uploaded) { //12 hours
     detachInterrupt(digitalPinToInterrupt(15));
     uploaded = true;
     connectWifi();
