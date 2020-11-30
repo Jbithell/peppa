@@ -6,7 +6,7 @@
 
 #include ".\config.h"
 
-#define SLOWEST_ROTATION 5000 //The maximum amount of time in ms it can take to do a complete lap
+#define SLOWEST_ROTATION 2500 //The maximum amount of time in ms it can take to do a complete lap
 #define UPLOAD_FREQUENCY 3600000
 
 #define SENSOR1 4
@@ -23,9 +23,7 @@ volatile int laps = 0;
 volatile int fastestLap = 9999;
 volatile unsigned long totalLapTime = 0;
 
-const char* ntpServer1 = "pool.ntp.org";
-const char* ntpServer2 = "time.google.com";
-const char* ntpServer3 = "time.cloudflare.com";
+const char* ntpServer1 = "0.europe.pool.ntp.org";
 
 void disconnectWifi() {
   WiFi.disconnect(true);
@@ -88,7 +86,8 @@ void setup() {
   Serial.println("Booted");
 
   connectWifi();
-  configTime(0, DSTOFFSET, ntpServer1, ntpServer2,ntpServer3);
+  configTime(0, DSTOFFSET, ntpServer1);
+  Serial.println(timeMinutes());
   disconnectWifi();
   
   pinMode(SENSOR1, INPUT_PULLUP);
