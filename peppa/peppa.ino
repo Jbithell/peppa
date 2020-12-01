@@ -23,7 +23,8 @@ volatile int laps = 0;
 volatile int fastestLap = 9999;
 volatile unsigned long totalLapTime = 0;
 
-const char* ntpServer1 = "0.europe.pool.ntp.org";
+const char* ntpServer1 = "pool.ntp.org";
+const char* ntpServer2 = "time.google.com";
 
 void disconnectWifi() {
   WiFi.disconnect(true);
@@ -86,7 +87,7 @@ void setup() {
   Serial.println("Booted");
 
   connectWifi();
-  configTime(0, DSTOFFSET, ntpServer1);
+  configTime(0, DSTOFFSET, ntpServer1,ntpServer2);
   Serial.println(timeMinutes());
   disconnectWifi();
   
@@ -97,9 +98,9 @@ void setup() {
 }
 void pulseOne() {
   if (awaiting == 3) { //The lap has just ended - and another one has begin  
-    if ((millis()-rotationStart) <= SLOWEST_ROTATION) { //Evaluate the timings of the last lap
+    int thisTime = millis()-rotationStart;
+    if (thisTime <= SLOWEST_ROTATION && thisTime >= 5) { //Evaluate the timings of the last lap
       //Store the lap
-      int thisTime = millis()-rotationStart;
       if (thisTime < fastestLap) {
         fastestLap = thisTime;
       }
