@@ -6,7 +6,7 @@
 
 #include ".\config.h"
 
-#define SLOWEST_ROTATION 2500 //The maximum amount of time in ms it can take to do a complete lap
+#define SLOWEST_ROTATION 3000 //The maximum amount of time in ms it can take to do a complete lap
 #define UPLOAD_FREQUENCY 3600000
 
 #define SENSOR1 4
